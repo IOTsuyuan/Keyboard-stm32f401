@@ -13,3 +13,7 @@
 # !index.php
 
 /EWARM/Keyboard-70%/Obj
+
+BROWSE.DB
+BROWSE.DB-shm
+BROWSE.DB-wal
