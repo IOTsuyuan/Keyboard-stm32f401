@@ -12,4 +12,4 @@
 #忽略除了index.php外的所以文件
 # !index.php
 
-*.[o]
+/EWARM/Keyboard-70%/Obj

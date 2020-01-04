@@ -10,6 +10,7 @@
                     "E:\\Project\\IAR\\Keyboard-70%\\EWARM\\",
                     "E:\\Project\\IAR\\Keyboard-70%\\Src\\",
                     "E:\\Project\\IAR\\Keyboard-70%\\Drivers\\STM32F4xx_HAL_Driver\\Src\\",
+                    "E:\\Project\\IAR\\Keyboard-70%\\Hardware\\",
                     "E:\\Project\\IAR\\Keyboard-70%\\Middlewares\\ST\\STM32_USB_Device_Library\\Core\\Src\\",
                     "E:\\Project\\IAR\\Keyboard-70%\\Middlewares\\ST\\STM32_USB_Device_Library\\Class\\CustomHID\\Src\\",
                     "D:\\IAR Systems\\Embedded Workbench 8.3\\arm\\inc\\c",
@@ -28,6 +29,7 @@
             "includePath": [
                 "D:\\IAR Systems\\Embedded Workbench 8.3\\arm\\inc\\c",
                 "D:\\IAR Systems\\Embedded Workbench 8.3\\arm\\inc",
+                "E:\\Project\\IAR\\Keyboard-70%\\Hardware\\",
                 "E:\\Project\\IAR\\Keyboard-70%\\Drivers\\CMSIS\\Include\\",
                 "E:\\Project\\IAR\\Keyboard-70%\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include\\",
                 "E:\\Project\\IAR\\Keyboard-70%\\Middlewares\\ST\\STM32_USB_Device_Library\\Class\\CustomHID\\Inc\\",

@@ -1,0 +1,15 @@
+"D:\IAR Systems\Embedded Workbench 8.3\arm\bin\armproc.dll" 
+
+"D:\IAR Systems\Embedded Workbench 8.3\arm\bin\armjlink2.dll" 
+
+"E:\Project\IAR\Keyboard-70%\EWARM\Keyboard-70%\Exe\Keyboard-70%.out" 
+
+--plugin="D:\IAR Systems\Embedded Workbench 8.3\arm\bin\armbat.dll" 
+
+--device_macro="D:\IAR Systems\Embedded Workbench 8.3\arm\config\debugger\ST\STM32F4xx.dmac" 
+
+--flash_loader="D:\IAR Systems\Embedded Workbench 8.3\arm\config\flashloader\ST\FlashSTM32F401xC.board" 
+
+
+
+
