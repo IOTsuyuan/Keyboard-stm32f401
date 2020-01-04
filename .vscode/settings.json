@@ -1,0 +1,13 @@
+{
+    "iar.enabled": true,
+    "files.associations": {
+        "main.h": "c",
+        "gpio.h": "c",
+        "IS31FL3732.h": "c",
+        "IS31FL3732RES.h": "c",
+        "i2c.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "stm32f4xx.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
+}
