@@ -43,7 +43,12 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+#define R_LED 0
+#define G_LED 1
+#define B_LED 2
 
+#define SCAL 0
+#define PWM  1
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -55,7 +60,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void delay_us(uint32_t nus);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

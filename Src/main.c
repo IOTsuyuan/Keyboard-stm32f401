@@ -30,16 +30,37 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "IS31FL3732.h"
+#include "IS31FL3741.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
+#define PIXEL_MAX 1
+typedef struct {
+  const uint16_t head[3];
+  uint16_t data[24 * PIXEL_MAX];
+  const uint16_t tail;
+} frame_buf_ws2812b;
+
+frame_buf_ws2812b frame = {
+  .head[0] = 0,
+  .head[1] = 0,
+  .head[1] = 0,
+  .tail    = 0,
+};
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+volatile uint8_t Mode_NO = 1;
 
+#define BIT_1 67u
+#define BIT_0 34u                            //这两个定义ws2812的数据0和1
+
+typedef uint8_t u8;
+typedef uint32_t u32;
+u8 fac_us;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -57,7 +78,7 @@ uint8_t USB_Recived_Count = 0;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+void ws2812b_show(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -72,6 +93,49 @@ int fputc(int ch,FILE *f)
 	HAL_UART_Transmit(&huart1,(uint8_t *)&ch,1,0xFFFF);
 	
 	return ch;
+}
+
+void delay_init(u8 SYSCLK)
+{
+    #if SYSTEM_SUPPORT_OS
+        u32 reload;
+    #endif
+   
+    HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+    //SysTick  HCLK
+    fac_us=SYSCLK;              // OS,fac_us
+   
+    #if SYSTEM_SUPPORT_OS       // OS.
+        reload=SYSCLK;
+        reload*=1000000/delay_ostickspersec;    //delay_ostickspersec
+        //reload 24Bit 16777216, 180M 0.745s
+        fac_ms=1000/delay_ostickspersec;        // OS.
+        SysTick->CTRL|=SysTick_CTRL_TICKINT_Msk;// SYSTICK
+        SysTick->LOAD=reload;                   // 1/OS_TICKS_PER_SEC
+        SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk; // SYSTICK
+        #else
+    #endif
+}
+
+
+void delay_us(u32 nus)
+{
+    u32 ticks;
+    u32 told,tnow,tcnt=0;
+    u32 reload=SysTick->LOAD;                   //LOAD
+    ticks=nus*fac_us;
+    told=SysTick->VAL;
+    while(1)
+    {
+        tnow=SysTick->VAL;
+        if(tnow!=told)
+        {
+            if(tnow<told)tcnt+=told-tnow;       // SYSTICK.
+            else tcnt+=reload-tnow+told;
+            told=tnow;
+            if(tcnt>=ticks)break;
+        }
+    }
 }
 /* USER CODE END 0 */
 
@@ -111,11 +175,13 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
   printf("hello world");
-
-  IS31FL3732_Init();
-  HAL_Delay(200);
-
-  Test_Led();
+  delay_init(84);                               //微秒级延时初始化
+	IS31FL3741_Init();
+  // IS31FL3732_Init();
+  // HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_1);    //WS2812使用的PWM
+  // HAL_Delay(200);
+  // Test_Led();
+    Play_IS31FL3741_Demo_mode();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -123,7 +189,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    // ws2812b_show();
+    HAL_Delay(500);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -172,7 +239,25 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void ws2812b_show(void)
+{
+  uint8_t i, j;
+  for(i = 0; i < PIXEL_MAX; i++)
+  {
+    for(j = 0; j < 8; j++)
+    {
+      frame.data[24 * i + j]      = (0xff & (0x80 >> j)) ? BIT_1 : BIT_0; //将高低位扩展到16bit
+      frame.data[24 * i + j + 8]  = (0xff & (0x80 >> j)) ? BIT_1 : BIT_0;
+      frame.data[24 * i + j + 16] = (0xff & (0x80 >> j)) ? BIT_1 : BIT_0;
+    }
+  }
+  HAL_TIM_PWM_Start_DMA(&htim3, TIM_CHANNEL_1, (uint32_t *)&frame, 3 + 24 * PIXEL_MAX + 1); //虽然传的是16bit但是要先转为32bit指针，
+}
 
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
+{
+  HAL_TIM_PWM_Stop(&htim3,TIM_CHANNEL_1);
+}
 /* USER CODE END 4 */
 
 /**

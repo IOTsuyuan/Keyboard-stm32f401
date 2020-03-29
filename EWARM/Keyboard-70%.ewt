@@ -1196,6 +1196,9 @@
         <group>
             <name>User</name>
             <file>
+                <name>$PROJ_DIR$\..\Src\dma.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\Src\gpio.c</name>
             </file>
             <file>
@@ -1209,6 +1212,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\stm32f4xx_it.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\tim.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\usart.c</name>
@@ -1312,6 +1318,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\Hardware\IS31FL3732RES.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Hardware\IS31FL3741.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Hardware\IS31FL3741.h</name>
         </file>
     </group>
     <group>

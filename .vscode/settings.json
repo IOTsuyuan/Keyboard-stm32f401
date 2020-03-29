@@ -8,7 +8,8 @@
         "i2c.h": "c",
         "stm32f4xx_hal.h": "c",
         "stm32f4xx.h": "c",
-        "usbd_custom_hid_if.h": "c"
+        "usbd_custom_hid_if.h": "c",
+        "is31fl3741.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }
