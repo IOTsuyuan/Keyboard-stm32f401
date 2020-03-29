@@ -14,6 +14,6 @@
 
 /EWARM/Keyboard-70%/Obj
 
-BROWSE.DB
-BROWSE.DB-shm
-BROWSE.DB-wal
+.vscode/BROWSE.DB
+.vscode/BROWSE.DB-shm
+.vscode/BROWSE.DB-wal
